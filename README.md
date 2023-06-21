@@ -8,6 +8,5 @@ This is a simple project using fastapi to take in a csv file, a number of period
 1. Make sure that you have git and docker installed
 2. Clone the Github repo using _git clone https://github.com/BoSsHoGaLeX66/fbprophet_api.git_
 2. After the cloning go to the folder and start up a cmd
-3. Then run _docker build . -t prediction:1.0_
-4. Then run _docker run -p 8000:8000 prediction:1.0_
+3. Then run docker compose up
 5. Then navigate to localhost:8000 and use the application

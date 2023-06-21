@@ -8,6 +8,4 @@ RUN pip install --no-cache-dir --upgrade -r requirments.txt
 
 COPY . /main.py /fastapi_test/
 
-EXPOSE 3100
-
-CMD ["gunicorn", "main:app"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]

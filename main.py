@@ -9,9 +9,8 @@ from azure.storage.blob import BlobServiceClient
 from decouple import config
 from fastapi.staticfiles import StaticFiles
 import uvicorn
-import requests
-import json
-from aspose.cells import Workbook
+
+
 
 
 KEY = config('BLOB_STORE_PRED_STRING')

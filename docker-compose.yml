@@ -1,10 +1,9 @@
 version: '3.8'
 
 services:
-
-  env_printer:
-    image: "environ_image"
-    environment:
-      - USER=mike
+  web:
+    build: .
+    ports:
+      - "8000:80"
     env_file:
       - .env
