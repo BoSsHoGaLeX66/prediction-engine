@@ -186,8 +186,16 @@ async def main(request: Request):
 
     global downloaded
     if downloaded:
+        global prediction_created
+        global uploaded
+        global already_uploaded
         os.remove('temp.csv')
         downloaded = False
+        prediction_created = False
+        uploaded = False
+        already_uploaded = False
+        display = None
+        return RedirectResponse('/thank_you', status_code=303)
 
     if already_uploaded and file_name != None:
         get_return()
@@ -218,6 +226,11 @@ async def main(request: Request):
         pass
 
     return templates.TemplateResponse('index.html', {'request': request, 'column_names': column_names, 'df': df, 'columns_select': columns_select, 'download': prediction_created, 'display': display, 'already_uploaded': already_uploaded, 'files_df': files_df})
+
+
+@app.get('/thank_you')
+def thank_you(request: Request):
+    return templates.TemplateResponse('thankyou.html', {'request': request})
 
 
 if __name__ == "__main__":
