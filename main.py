@@ -63,20 +63,20 @@ async def create_model(periods: int = Form(), column: str = Form()):
     df = get_upload()
 
     #checks to make sure that the right columns are in the data frame and if they are correct it is converted into a numpy array
-    possible_datetime_column_names = ['date', 'ds', 'datetime', 'date_time', 'Date', 'Datetime', 'DateTime', 'Date_Time', 'DS', 'Date_time']
+    possible_datetime_column_names = ['date', 'ds', 'datetime', 'date_time']
     columns = df.columns
 
     date = 0
     for i in range(len(columns)):
-        if columns[i] in possible_datetime_column_names:
+        if columns[i].lower() in possible_datetime_column_names:
             date = date + 1
 
     if date != 1:
         raise HTTPException(status_code=400, detail='Can not find datetime column')
 
 
-    for i in range(5):
-        if columns[i] in possible_datetime_column_names:
+    for i in range(len(columns)):
+        if columns[i].lower() in possible_datetime_column_names:
             date_column = columns[i]
             break
 
@@ -98,7 +98,7 @@ async def create_model(periods: int = Form(), column: str = Form()):
     data = {'ds': pd.to_datetime(ds), 'y': y}
     cleaned_df = pd.DataFrame(data=data)
     global end_date
-    end_date = cleaned_df['ds'].iloc[0]
+    end_date = cleaned_df['ds'].iloc[-1]
 
     #creates that prophet model and if fails assumes data is non int
     m = Prophet()
@@ -173,6 +173,9 @@ async def main(request: Request):
 
     uploads_files = [blob.name for blob in blob_container_uploads.list_blobs()]
     return_files = [blob.name for blob in blob_container_return_files.list_blobs()]
+    if len(uploads_files) > len(return_files):
+        for i in range (len(uploads_files) - len(return_files)):
+            return_files.append('NaN')
 
     files_df = pd.DataFrame({'uploads': uploads_files, 'return': return_files})
 
