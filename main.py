@@ -195,7 +195,7 @@ async def main(request: Request):
         uploaded = False
         already_uploaded = False
         display = None
-        return RedirectResponse('/thank_you', status_code=303)
+
 
     if already_uploaded and file_name != None:
         get_return()

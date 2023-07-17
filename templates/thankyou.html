@@ -5,7 +5,8 @@
 {% endblock %}
 {% block content %}
 
-<body>
+<body onload="document.download.submit()">
+<form action="/download" method="get" enctype="multipart/form-data" name="download"></form>
     <section class="py-4 py-xl-5">
         <div class="container">
             <div class="text-center p-4 p-lg-5">
